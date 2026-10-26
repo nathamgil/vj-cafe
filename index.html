@@ -87,6 +87,8 @@ section{padding:104px 0}
 /* vitrine */
 .vit{background:var(--branco);border-block:1px solid var(--linha)}
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.item{display:flex;flex-direction:column}
+.item .row{margin-top:auto!important;padding-top:14px}
 .item figure{margin:0;overflow:hidden;border-radius:4px;aspect-ratio:4/5;background:var(--papel)}
 .item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
 .item:hover img{transform:scale(1.04)}
@@ -99,7 +101,8 @@ section{padding:104px 0}
 .plus svg{width:16px;height:16px}
 
 /* carte */
-.carte{display:grid;grid-template-columns:1fr 1fr;gap:20px 80px}
+.carte{columns:2;column-gap:80px}
+.cat{break-inside:avoid;margin-bottom:48px}
 .cat h3{font-size:30px;display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
 .cat h3 span{font:500 12px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ouro)}
 .dish{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;border-bottom:1px solid var(--linha);align-items:center}
@@ -197,7 +200,7 @@ legend,.lbl{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppe
   .hero{grid-template-columns:1fr;gap:56px;padding:44px 0 80px}
   .frame{width:min(300px,78%)}.polaroid{left:-40px;width:140px}
   .shelf{grid-template-columns:1fr 1fr;gap:28px 18px}
-  .carte{grid-template-columns:1fr}
+  .carte{columns:1}
   .split,.split.rev{grid-template-columns:1fr;gap:44px}
   .split.rev .photo{order:-1}
   .visit{grid-template-columns:1fr}.visit div{border-right:0;border-bottom:1px solid var(--linha)}
@@ -243,7 +246,7 @@ legend,.lbl{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppe
   </div>
   <div class="frame">
     <div class="arch"><img src="img/arte.webp" width="360" height="640" alt="Ilustração da VJ: um café parisiense entre a Torre Eiffel e o Farol da Barra" fetchpriority="high"></div>
-    <figure class="polaroid"><img src="img/brigadeiro.webp" width="640" height="640" alt="Fatia de torta de brigadeiro" loading="lazy"><figcaption>a de brigadeiro</figcaption></figure>
+    <figure class="polaroid"><img src="img/brigadeiro.webp" width="640" height="640" alt="Fatia de torta de brigadeiro" decoding="async"><figcaption>a de brigadeiro</figcaption></figure>
   </div>
 </div>
 
