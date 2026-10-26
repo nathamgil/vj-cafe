@@ -112,9 +112,9 @@ function vHoje(){
  const d14=[...Array(14)].map((_,i)=>{const d=13-i;return{d,v:sum(D.pedidos.filter(p=>dias(p.criado)===d&&p.status!=='cancelado'),p=>p.total)}}),mx=Math.max(...d14.map(x=>x.v),1);
  const top={};mes.forEach(p=>p.itens.forEach(i=>top[i.nome]=(top[i.nome]||0)+i.qtd));
  const bx=D.estoque.filter(e=>e.qtd<e.min),sum30=D.clientes.filter(c=>dias(c.ultimo)>=15);
- return `<h1>Bom dia, Jamile e Victor</h1><p class="sub">${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})} · tudo da VJ num lugar só</p>
+ return `<h1>${new Date().getHours()<12?'Bom dia':new Date().getHours()<18?'Boa tarde':'Boa noite'}, Jamile e Victor</h1><p class="sub">${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})} · tudo da VJ num lugar só</p>
  <div class="kp"><div class="k"><small>Vendido hoje</small><b>${brl(fat)}</b><i>${ph.length} pedidos · ticket ${brl(ph.length?fat/ph.length:0)}</i></div>
- <div class="k"><small>Balcão / Site / iFood</small><b style="font-size:20px">${brl(por('balcao'))}<br>${brl(por('site'))}<br>${brl(por('ifood'))}</b></div>
+ <div class="k"><small>Por canal hoje</small><table style="margin-top:4px">${['balcao','site','ifood'].map(c=>`<tr><td style="padding:3px 0;border:0">${tagC(c)}</td><td style="padding:3px 0;border:0;text-align:right;font-weight:600">${brl(por(c))}</td></tr>`).join('')}</table></div>
  <div class="k"><small>Comissão iFood hoje (${D.config.taxaIfoodPct}%)</small><b class="al">− ${brl(ifoodTx)}</b><i>o que fica com o iFood</i></div>
  <div class="k"><small>Economia com pedidos do site (30 dias)</small><b style="color:var(--ok)">+ ${brl(econ)}</b><i>comissão que não foi paga</i></div></div>
  <div class="box"><h2>Vendas dos últimos 14 dias</h2><div class="chart">${d14.map(x=>`<div style="height:${Math.max(4,x.v/mx*100)}%" title="${brl(x.v)}"><span>${x.d?new Date(Date.now()-x.d*864e5).getDate():'hj'}</span></div>`).join('')}</div><div style="height:20px"></div></div>

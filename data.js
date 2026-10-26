@@ -1,7 +1,7 @@
 /* VJ Café & Pâtisserie — dados da demo (localStorage). Site e painel na mesma origem:
    pedido feito no site aparece no painel na hora. Em produção vira Supabase. Preços são EXEMPLO. */
 (function () {
-  const KEY = 'vj_db_v1';
+  const KEY = 'vj_db_v2';
   const bc = 'BroadcastChannel' in window ? new BroadcastChannel('vj_sync') : null;
   const ls = [];
   const LOJA = {
@@ -69,15 +69,15 @@
     mk(1201, 'ifood', 'c3', [['fatia-brig', 2], ['cappuccino', 2]], 'entrega', 'novo', 0, 0.2, 'ifood');
     mk(1200, 'site', 'c1', [['fatia-zero', 1], ['latte', 1]], 'retirada', 'preparo', 0, 0.4, 'pix');
     mk(1199, 'site', 'c5', [['inteira-cenoura', 1]], 'entrega', 'pronto', 0, 0.8, 'pix');
-    mk(1198, 'balcao', null, [['espresso', 2], ['croissant', 2]], 'balcao', 'concluido', 0, 1.5, 'credito');
+    mk(1198, 'balcao', null, [['espresso', 2], ['croissant', 2]], 'balcao', 'concluido', 0, 1.5, 'dinheiro');
     mk(1197, 'ifood', 'c4', [['trufas', 1]], 'entrega', 'concluido', 0, 2.5, 'ifood');
     mk(1196, 'balcao', 'c2', [['cappuccino', 3], ['quiche', 3], ['fatia-cenoura', 3]], 'balcao', 'concluido', 0, 3.2, 'debito');
-    mk(1195, 'balcao', null, [['rondelli', 1], ['suco', 1]], 'balcao', 'concluido', 0, 4, 'pix');
+    mk(1195, 'balcao', null, [['rondelli', 1], ['suco', 1]], 'balcao', 'concluido', 0, 4, 'dinheiro');
     for (let d = 1; d <= 13; d++) for (let k = 0; k < 6 + (d * 7) % 5; k++) {
       const canal = ['balcao', 'balcao', 'balcao', 'ifood', 'site'][(d + k) % 5], prods = ['cappuccino', 'fatia-brig', 'croissant', 'quiche', 'latte', 'fatia-cenoura', 'rondelli', 'trufas'];
       mk(1194 - d * 12 - k, canal, canal === 'balcao' ? null : 'c' + (1 + (d + k) % 7), [[prods[(d * 3 + k) % 8], 1 + (k % 2)], [prods[(d + k * 5) % 8], 1]], canal === 'balcao' ? 'balcao' : 'entrega', 'concluido', d, k, canal === 'ifood' ? 'ifood' : ['pix', 'credito', 'debito', 'dinheiro'][k % 4]);
     }
-    const caixa = { aberto: true, abertura: ago(0, 6), fundo: 150, movs: [{ t: ago(0, 2), tipo: 'sangria', valor: 200, desc: 'Depósito no banco' }, { t: ago(0, 1), tipo: 'despesa', valor: 38, desc: 'Gelo e guardanapos' }] };
+    const caixa = { aberto: true, abertura: ago(0, 6), fundo: 150, movs: [{ t: ago(0, 2), tipo: 'sangria', valor: 100, desc: 'Depósito no banco' }, { t: ago(0, 1), tipo: 'despesa', valor: 38, desc: 'Gelo e guardanapos' }] };
     return { v: 1, loja: LOJA, cats: CATS, produtos: PRODUTOS, estoque: ESTOQUE, movEstoque: [], status: STATUS, canais: CANAIS, config: CONFIG, clientes, pedidos, caixa, fechamentos: [], seq: 1201 };
   }
   function db() { try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) return r; } catch (e) {} const s = seed(); try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} return s; }
