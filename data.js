@@ -1,7 +1,7 @@
 /* VJ Café & Pâtisserie — dados da demo (localStorage). Site e painel na mesma origem:
    pedido feito no site aparece no painel na hora. Em produção vira Supabase. Preços são EXEMPLO. */
 (function () {
-  const KEY = 'vj_db_v2';
+  const KEY = 'vj_db_v3';
   const bc = 'BroadcastChannel' in window ? new BroadcastChannel('vj_sync') : null;
   const ls = [];
   const LOJA = {
@@ -15,24 +15,36 @@
     ['espresso', 'Cafés', 'Espresso', 7, '', ['cafe:9', 'copo:1']],
     ['cappuccino', 'Cafés', 'Cappuccino', 14, '', ['cafe:9', 'leite:120', 'copo:1']],
     ['latte', 'Cafés', 'Café latte', 13, '', ['cafe:9', 'leite:180', 'copo:1']],
-    ['mocha', 'Cafés', 'Mocha com chocolate belga', 16, '', ['cafe:9', 'leite:150', 'choco:20', 'copo:1']],
+    ['mocha', 'Cafés', 'Mocha', 16, '', ['cafe:9', 'leite:150', 'choco:20', 'copo:1']],
     ['croissant', 'Pâtisserie', 'Croissant de manteiga', 12, '', ['croissant:1']],
-    ['fatia-brig', 'Pâtisserie', 'Fatia torta de brigadeiro', 22, 'brigadeiro.jpg', ['torta-brig:1']],
-    ['fatia-cenoura', 'Pâtisserie', 'Fatia torta de cenoura com nozes caramelizadas', 24, 'cenoura.jpg', ['torta-cen:1']],
-    ['fatia-tapioca', 'Pâtisserie', 'Fatia torta de tapioca com doce de leite', 20, 'tapioca.jpg', ['torta-tap:1']],
-    ['fatia-abacaxi', 'Pâtisserie', 'Fatia torta de abacaxi caramelizado com coco', 20, '', ['torta-aba:1']],
-    ['fatia-zero', 'Pâtisserie', 'Fatia torta zero glúten e zero lactose', 24, '', ['torta-zero:1']],
-    ['trufas', 'Pâtisserie', 'Caixa com 6 bombons finos', 36, 'bombons.jpg', ['bombom:6', 'caixa:1']],
-    ['inteira-brig', 'Tortas inteiras', 'Torta de brigadeiro inteira (12 fatias) · encomenda', 190, 'brigadeiro.jpg', ['torta-brig:12']],
-    ['inteira-cenoura', 'Tortas inteiras', 'Torta de cenoura com nozes inteira · encomenda', 210, 'cenoura.jpg', ['torta-cen:12']],
+    ['fatia-brig', 'Pâtisserie', 'Torta de brigadeiro', 22, 'brigadeiro.jpg', ['torta-brig:1']],
+    ['fatia-cenoura', 'Pâtisserie', 'Torta de cenoura com nozes', 24, 'cenoura.jpg', ['torta-cen:1']],
+    ['fatia-tapioca', 'Pâtisserie', 'Torta de tapioca com doce de leite', 20, 'tapioca.jpg', ['torta-tap:1']],
+    ['fatia-abacaxi', 'Pâtisserie', 'Torta de abacaxi com coco', 20, '', ['torta-aba:1']],
+    ['fatia-zero', 'Pâtisserie', 'Torta zero glúten e zero lactose', 24, '', ['torta-zero:1']],
+    ['trufas', 'Pâtisserie', 'Caixa com 6 bombons', 36, 'bombons.jpg', ['bombom:6', 'caixa:1']],
+    ['inteira-brig', 'Tortas inteiras', 'Torta de brigadeiro inteira', 190, 'brigadeiro.jpg', ['torta-brig:12']],
+    ['inteira-cenoura', 'Tortas inteiras', 'Torta de cenoura inteira', 210, 'cenoura.jpg', ['torta-cen:12']],
     ['cuscuz', 'Salgados & almoço', 'Cuscuz da casa', 18, 'cuscuz.jpg', []],
     ['quiche', 'Salgados & almoço', 'Quiche do dia', 22, '', []],
     ['salada', 'Salgados & almoço', 'Salada fresca da casa', 32, 'salada.jpg', []],
-    ['rondelli', 'Salgados & almoço', 'Rondelli de ricota e espinafre ao quatro queijos', 46, 'massas.jpg', []],
-    ['trouxinha', 'Salgados & almoço', 'Trouxinha de frango com requeijão ao pomodoro', 46, 'massas.jpg', []],
+    ['rondelli', 'Salgados & almoço', 'Rondelli de ricota e espinafre', 46, 'massas.jpg', []],
+    ['trouxinha', 'Salgados & almoço', 'Trouxinha de frango', 46, 'massas.jpg', []],
     ['suco', 'Bebidas frias', 'Suco natural 400 ml', 12, '', ['copo:1']],
     ['agua', 'Bebidas frias', 'Água mineral', 5, '', []],
   ].map(([id, cat, nome, preco, foto, ficha]) => ({ id, cat, nome, preco, foto, ficha: Object.fromEntries(ficha.map(f => { const [k, v] = f.split(':'); return [k, +v]; })) }));
+  const DESC = {
+    espresso: 'Curto e encorpado, tirado na hora.', cappuccino: 'Espresso, leite vaporizado e espuma cremosa.', latte: 'Espresso suave com bastante leite.',
+    mocha: 'Espresso, leite e chocolate belga derretido.', croissant: 'Folhado, amanteigado, assado todo dia.',
+    'fatia-brig': 'Massa de chocolate, recheio cremoso de brigadeiro e granulado belga.', 'fatia-cenoura': 'Recheio e cobertura de cream cheese, nozes caramelizadas e farofa de amêndoas.',
+    'fatia-tapioca': 'Torta de tapioca com doce de leite. Receita da casa.', 'fatia-abacaxi': 'Abacaxi caramelizado com coco, leve e delicada.',
+    'fatia-zero': 'Maçã, damasco, ameixa e nozes. Sem glúten e sem lactose.', trufas: 'Bombons finos sortidos em caixa para presente.',
+    'inteira-brig': 'Serve 12 fatias. Encomende com 24 h de antecedência.', 'inteira-cenoura': 'Serve 12 fatias. Encomende com 24 h de antecedência.',
+    cuscuz: 'Cuscuz nordestino quentinho, do jeito de casa.', quiche: 'Massa amanteigada e recheio que muda todo dia.', salada: 'Folhas frescas, tomate-cereja e molho da casa.',
+    rondelli: 'Recheado de ricota e espinafre, ao molho quatro queijos.', trouxinha: 'Frango com requeijão cremoso, pomodoro fresco e manjericão.',
+    suco: 'Fruta da estação, feito na hora.', agua: 'Com ou sem gás.',
+  };
+  PRODUTOS.forEach(p => { p.desc = DESC[p.id] || ''; });
   const ESTOQUE = [
     ['cafe', 'Café em grão', 'g', 2400, 1000, 0.12], ['leite', 'Leite integral', 'ml', 14000, 6000, 0.006],
     ['choco', 'Chocolate belga', 'g', 900, 500, 0.09], ['croissant', 'Croissant (massa congelada)', 'un', 14, 20, 2.8],
