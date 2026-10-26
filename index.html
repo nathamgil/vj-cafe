@@ -55,7 +55,7 @@ button{font:inherit;color:inherit}
 .bag b{font-weight:500;min-width:20px;height:20px;border-radius:10px;background:var(--cafe);color:var(--creme);font-size:12px;display:inline-grid;place-items:center;padding:0 6px}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:var(--r);padding:15px 26px;font-weight:500;font-size:16px;text-decoration:none;cursor:pointer;border:1px solid var(--cafe);transition:background .2s,color .2s,transform .1s}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:var(--r);padding:15px 26px;font-weight:500;font-size:16px;text-decoration:none;cursor:pointer;border:1px solid var(--cafe);transition:background .2s,color .2s,transform .1s}
 .btn:active{transform:translateY(1px)}
 .btn-p{background:var(--cafe);color:var(--creme)}
 .btn-p:hover{background:var(--tinta)}
@@ -212,7 +212,10 @@ legend,.lbl{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppe
   .item h3{font-size:21px}.item p{display:none}
   .mbar.on{display:block}
   .demo{left:12px;right:12px;bottom:auto;top:84px;display:none}
-  .hero .acts .btn{flex:1}
+  .hero .acts{flex-direction:column}
+  .brand span{font-size:18px;white-space:nowrap}.brand small{display:none}.brand img{width:38px;height:38px}
+  .top .wrap{gap:12px}.bag{padding:9px 12px}
+  .hero h1{font-size:44px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
